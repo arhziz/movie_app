@@ -1,0 +1,19 @@
+name: movie_app_api
+description: The interface and models for an API providing access to the Movie App
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.4.0
+
+dependencies: 
+  equatable:
+  json_annotation: ^4.9.0
+  meta:
+
+dev_dependencies:
+  build_runner:
+  json_serializable: ^6.3.1
+  mocktail: ^1.0.4
+  test: ^1.25.7
+  very_good_analysis: ^6.0.0

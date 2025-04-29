@@ -1,0 +1,30 @@
+name: movie_app_api_firestore
+description: The firestore implementation of the movie_app_api  providing access to the Movie App
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.4.0
+
+dependencies: 
+  
+  dio: ^5.7.0
+  dio_cache_interceptor: ^3.5.0
+  equatable: ^2.0.0
+  flutter_secure_storage: ^5.0.2
+  get_it: ^8.0.3
+  http:
+  injectable: 
+  json_annotation: ^4.6.0
+  meta: ^1.8.0
+  movie_app_api:
+    path: ../movie_app_api
+
+
+dev_dependencies:
+  build_runner: ^2.0.0
+  injectable_generator:
+  json_serializable: ^6.3.1
+  mocktail: ^1.0.4
+  test: ^1.25.2
+  very_good_analysis: ^6.0.0
