@@ -1,4 +1,4 @@
-import 'package:movie_app_api/src/authentication/models/user.dart';
+import 'package:movie_app_api/movie_app_api.dart';
 
 ///@template_start authentication_api_item
 ///The Abstreaction of the authentication api

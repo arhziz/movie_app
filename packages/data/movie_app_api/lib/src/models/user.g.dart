@@ -13,11 +13,14 @@ User _$UserFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = User(
+          id: $checkedConvert('id', (v) => v as String),
           email: $checkedConvert('email', (v) => v as String? ?? ''),
           country: $checkedConvert('country', (v) => v as String? ?? ''),
           fullName: $checkedConvert('full_name', (v) => v as String? ?? ''),
           phoneNumber:
               $checkedConvert('phone_number', (v) => v as String? ?? ''),
+          name: $checkedConvert('name', (v) => v as String? ?? ''),
+          photo: $checkedConvert('photo', (v) => v as String? ?? ''),
         );
         return val;
       },
@@ -29,6 +32,9 @@ User _$UserFromJson(Map<String, dynamic> json) => $checkedCreate(
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'email': instance.email,
+      'id': instance.id,
+      'name': instance.name,
+      'photo': instance.photo,
       'full_name': instance.fullName,
       'phone_number': instance.phoneNumber,
       'country': instance.country,

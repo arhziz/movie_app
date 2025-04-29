@@ -18,20 +18,20 @@ MovieResponse _$MovieResponseFromJson(Map<String, dynamic> json) =>
           totalPages:
               $checkedConvert('total_pages', (v) => (v as num?)?.toInt() ?? 0),
           totalResults: $checkedConvert(
-              'total_results', (v) => (v as num?)?.toInt() ?? 0,),
+              'total_results', (v) => (v as num?)?.toInt() ?? 0),
           results: $checkedConvert(
               'results',
               (v) =>
                   (v as List<dynamic>?)
                       ?.map((e) => Movie.fromJson(e as Map<String, dynamic>))
                       .toList() ??
-                  const [],),
+                  const []),
         );
         return val;
       },
       fieldKeyMap: const {
         'totalPages': 'total_pages',
-        'totalResults': 'total_results',
+        'totalResults': 'total_results'
       },
     );
 

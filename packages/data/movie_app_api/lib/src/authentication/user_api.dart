@@ -1,4 +1,5 @@
-import 'package:movie_app_api/src/authentication/models/models.dart';
+import 'package:movie_app_api/movie_app_api.dart';
+
 
 ///@template_start user_api_item
 ///This is the abstraction of the user api object
