@@ -19,8 +19,9 @@ class User extends BaseModel {
     this.phoneNumber = '',
     this.name = '',
     this.photo = '',
+    super.typeString = 'user',
     // ignore: avoid_field_initializers_in_const_classes
-  }) : type = 'user';
+  });
 
   /// The current user's email address.
   final String email;
@@ -48,11 +49,6 @@ class User extends BaseModel {
   ///cannot be null
   ///default value = ''
   final String country;
-
-  /// The type of the user.
-  /// This is used to identify the type of the model when deserializing.
-  /// It is set to 'user' for the [User] model.
-  final String type;
 
   /// Empty user which represents an unauthenticated user.
   static const empty = User(id: '');

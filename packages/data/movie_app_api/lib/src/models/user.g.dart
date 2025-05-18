@@ -21,16 +21,20 @@ User _$UserFromJson(Map<String, dynamic> json) => $checkedCreate(
               $checkedConvert('phone_number', (v) => v as String? ?? ''),
           name: $checkedConvert('name', (v) => v as String? ?? ''),
           photo: $checkedConvert('photo', (v) => v as String? ?? ''),
+          typeString:
+              $checkedConvert('type_string', (v) => v as String? ?? 'user'),
         );
         return val;
       },
       fieldKeyMap: const {
         'fullName': 'full_name',
-        'phoneNumber': 'phone_number'
+        'phoneNumber': 'phone_number',
+        'typeString': 'type_string'
       },
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'type_string': instance.typeString,
       'email': instance.email,
       'id': instance.id,
       'name': instance.name,

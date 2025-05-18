@@ -22,17 +22,21 @@ AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => $checkedCreate(
                       ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
                       .toList() ??
                   const []),
+          typeString: $checkedConvert(
+              'type_string', (v) => v as String? ?? 'app_settings'),
         );
         return val;
       },
       fieldKeyMap: const {
         'hasSeenOnboarding': 'has_seen_onboarding',
-        'selectedGenres': 'selected_genres'
+        'selectedGenres': 'selected_genres',
+        'typeString': 'type_string'
       },
     );
 
 Map<String, dynamic> _$AppSettingsToJson(AppSettings instance) =>
     <String, dynamic>{
+      'type_string': instance.typeString,
       'has_seen_onboarding': instance.hasSeenOnboarding,
       'selected_genres': instance.selectedGenres,
     };

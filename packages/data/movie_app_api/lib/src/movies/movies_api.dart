@@ -14,7 +14,7 @@ abstract class MoviesApi {
   ///gets the movie details
   ///takes in the movie id
   ///returns the movie object
-  Future<Movie> getMovie(int id);
+  Future<MovieDetail> getMovie(int id);
 
   ///Searchs movie by name only
   ///returns list of movie object

@@ -14,7 +14,9 @@ class AppSettings extends BaseModel {
   const AppSettings({
     this.hasSeenOnboarding = false,
     this.selectedGenres = const [],
-  }) : type = 'app_settings';
+    super.typeString = 'app_settings',
+    // ignore: avoid_field_initializers_in_const_classes
+  });
 
   /// The current user's onboarding status.
   final bool hasSeenOnboarding;
@@ -23,8 +25,6 @@ class AppSettings extends BaseModel {
   /// This is a list of [Genre] objects representing the genres.
   /// This list is used to filter the movies displayed to the user.
   final List<Genre> selectedGenres;
-
-  final String type;
 
   /// Empty app settings which represents an unauthenticated user.
   static const empty = AppSettings();
