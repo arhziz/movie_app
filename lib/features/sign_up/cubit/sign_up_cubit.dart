@@ -47,4 +47,18 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.withSubmissionFailure());
     }
   }
+
+  /// This method is called when the user clicks the "Log in with Google"
+  /// button.
+  Future<void> logInWithGoogle() async {
+    emit(state.withSubmissionInProgress());
+    try {
+      await _authenticationRepository.logInWithGoogle();
+      emit(state.withSubmissionSuccess());
+    } on LogInWithGoogleFailure catch (e) {
+      emit(state.withSubmissionFailure(e.message));
+    } catch (_) {
+      emit(state.withSubmissionFailure());
+    }
+  }
 }

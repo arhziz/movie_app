@@ -44,10 +44,15 @@ class OnBoardingView extends StatelessWidget {
                       AppAssets.onboardingImage,
                       fit: BoxFit.cover,
                     ),
+                    const SizedBox(
+                      height: 25,
+                    ),
                     Text(
-                      'Tell us about your favorite movie genres',
-                      style: AppTextStyles.bodyMedium.copyWith(
+                      'Tell us about your \n favorite movie genres',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.titleSmall.copyWith(
                         color: AppColors.white,
+                        fontSize: AppDimens.p24,
                       ),
                     ),
                     SizedBox(
@@ -59,11 +64,11 @@ class OnBoardingView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 170,
+                      height: 80,
                     ),
                     const SelectGenresWidget(),
                     const SizedBox(
-                      height: 0,
+                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -71,10 +76,12 @@ class OnBoardingView extends StatelessWidget {
                         horizontal: AppDimens.p36,
                       ),
                       child: Text(
-                        'Select thr genres you \n like to watch',
+                        'Select the genres you \n like to watch',
                         textAlign: TextAlign.center,
                         style: AppTextStyles.titleSmall.copyWith(
-                            color: AppColors.white, fontSize: AppDimens.p20),
+                          color: AppColors.white,
+                          fontSize: AppDimens.p24,
+                        ),
                       ),
                     ),
                   ],
@@ -103,10 +110,11 @@ class OnBoardingView extends StatelessWidget {
                 Center(
                   child: SmoothPageIndicator(
                     controller: controller,
-                    count: 3,
+                    count: 2,
                     effect: const WormEffect(
                       dotHeight: 5,
                       dotWidth: 50,
+                      radius: 25,
                       dotColor: AppColors.secondaryDark,
                       activeDotColor: AppColors.primaryDark,
                     ),

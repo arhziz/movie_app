@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, parameter_assignments
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -115,11 +115,14 @@ class HttpClient implements IHttpClient {
   }
 
   @override
-  Future<Response<dynamic>> putHttp(String route, dynamic body,
-      {Map<String, dynamic>? params,
-      bool formdata = false,
-      bool authenticate = false,
-      bool formEncoded = false,}) {
+  Future<Response<dynamic>> putHttp(
+    String route,
+    dynamic body, {
+    Map<String, dynamic>? params,
+    bool formdata = false,
+    bool authenticate = false,
+    bool formEncoded = false,
+  }) {
     if (formdata) {
       body = FormData.fromMap(body as Map<String, dynamic>);
     }
@@ -139,11 +142,14 @@ class HttpClient implements IHttpClient {
   }
 
   @override
-  Future<Response<dynamic>> patchHttp(String route, dynamic body,
-      {Map<String, dynamic>? params,
-      bool formdata = false,
-      bool formEncoded = false,
-      bool authenticate = false,}) {
+  Future<Response<dynamic>> patchHttp(
+    String route,
+    dynamic body, {
+    Map<String, dynamic>? params,
+    bool formdata = false,
+    bool formEncoded = false,
+    bool authenticate = false,
+  }) {
     if (formdata) {
       body = FormData.fromMap(body as Map<String, dynamic>);
     }

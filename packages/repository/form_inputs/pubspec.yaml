@@ -7,3 +7,5 @@ environment:
 
 dependencies:
   formz: ^0.7.0
+dev_dependencies:
+  very_good_analysis: ^6.0.0

@@ -6,7 +6,6 @@ import 'package:movie_app/app/app_bloc_observer.dart';
 import 'package:movie_app/app/view/app.dart';
 import 'package:movie_app/firebase_options.dart';
 import 'package:movie_app_api_firestore/movie_app_api_firestore.dart';
-import 'package:movie_app_repository/movie_app_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
@@ -23,8 +22,8 @@ void main() async {
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
   configureHttpClientDependencies('dev');
-  final authenticationRepository = AuthenticationRepository();
-  await authenticationRepository.user.first;
+  //final authenticationRepository = AuthenticationRepository();
+  //await authenticationRepository.user.first;
   final movieApi = MoviesApiImpl(client: clientLocator<IHttpClient>());
   runApp(MovieApp(moviesApi: movieApi));
 }

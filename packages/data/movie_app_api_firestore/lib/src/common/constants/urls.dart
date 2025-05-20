@@ -5,4 +5,6 @@ class Urls {
       'https://api.themoviedb.org/3/discover/movie';
   static const String getMovieGenres =
       'https://api.themoviedb.org/3/genre/movie/list?language=en';
+
+  static const String getMovieDetails = 'https://api.themoviedb.org/3/movie/';
 }

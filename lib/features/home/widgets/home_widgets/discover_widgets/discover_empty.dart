@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 ///@template movies_empty_item
 ///This is the movies empty view
 ///@endemplate
-class MoviesEmpty extends StatelessWidget {
+class DiscoverEmpty extends StatelessWidget {
   ///@macro movies_empty_item
-  const MoviesEmpty({
+  const DiscoverEmpty({
     required this.loadMovies,
     super.key,
   });
 
   ///The function to load movies
   ///@param loadMovies the function to load movies
-  final ValueGetter<Future<void>> loadMovies;
+  final VoidCallback loadMovies;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

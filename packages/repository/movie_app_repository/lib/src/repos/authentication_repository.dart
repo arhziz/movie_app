@@ -4,9 +4,7 @@ import 'package:cache/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:movie_app_api/movie_app_api.dart' show Genre;
-import 'package:movie_app_repository/src/models/models.dart'
-    show AppSettings, User;
+import 'package:movie_app_api/movie_app_api.dart' show AppSettings, Genre, User;
 
 /// {@template sign_up_with_email_and_password_failure}
 /// Thrown during the sign up process if a failure occurs.
@@ -193,12 +191,12 @@ class AuthenticationRepository {
   /// User cache key.
   /// Should only be used for testing purposes.
   //@visibleForTesting
-  static const userCacheKey = '__user_cache_key__';
+  static const userCacheKey = '__user_cache_key_v3__';
 
   /// User settings cache key.
   /// Should only be used for testing purposes.
   //@visibleForTesting
-  static const appSettingsCacheKey = '__app_settings_cache_key__';
+  static const appSettingsCacheKey = '__app_settings_cache_key_v3__';
 
   /// Stream of [User] which will emit the current user when
   /// the authentication state changes.
@@ -207,7 +205,6 @@ class AuthenticationRepository {
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
-      _cache.write(key: userCacheKey, value: user);
       return user;
     });
   }
@@ -266,10 +263,11 @@ class AuthenticationRepository {
   /// Throws a [SignUpWithEmailAndPasswordFailure] if an exception occurs.
   Future<void> signUp({required String email, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      final userResponse = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      convertCredToUser(userResponse);
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
@@ -298,7 +296,9 @@ class AuthenticationRepository {
         );
       }
 
-      await _firebaseAuth.signInWithCredential(credential);
+      final userCredentials =
+          await _firebaseAuth.signInWithCredential(credential);
+      convertCredToUser(userCredentials);
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw LogInWithGoogleFailure.fromCode(e.code);
     } catch (_) {
@@ -314,10 +314,11 @@ class AuthenticationRepository {
     required String password,
   }) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+      final userResponse = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      convertCredToUser(userResponse);
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
@@ -335,15 +336,40 @@ class AuthenticationRepository {
         _firebaseAuth.signOut(),
         _googleSignIn.signOut(),
       ]);
+      await _cache.delete(key: userCacheKey);
+      _controller.add(AuthenticationStatus.unauthenticated);
     } catch (_) {
       throw LogOutFailure();
     }
+  }
+
+  /// Converts the [firebase_auth.UserCredential] to a [User].
+  void convertCredToUser(
+    firebase_auth.UserCredential userCredential,
+  ) {
+    final user = userCredential.user;
+    if (user != null) {
+      _cache.write(key: userCacheKey, value: user.toUser);
+      _controller.add(AuthenticationStatus.authenticated);
+    } else {
+      _controller.add(AuthenticationStatus.unauthenticated);
+    }
+  }
+
+  /// Disposes the authentication stream controller.
+  void dispose() {
+    _controller.close();
   }
 }
 
 extension on firebase_auth.User {
   /// Maps a [firebase_auth.User] into a [User].
   User get toUser {
-    return User(id: uid, email: email, name: displayName, photo: photoURL);
+    return User(
+      id: uid,
+      email: email ?? '',
+      name: displayName ?? '',
+      photo: photoURL ?? '',
+    );
   }
 }

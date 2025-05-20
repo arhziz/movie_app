@@ -21,6 +21,7 @@ class OnBoardingGenresListRequested extends OnBoardingEvent {
   const OnBoardingGenresListRequested();
 }
 
+///
 class OnBoardingGenresSelected extends OnBoardingEvent {
   /// Creates an instance of OnBoardingGenresSelected event.
   const OnBoardingGenresSelected(this.selectedGenre);

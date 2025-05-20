@@ -11,7 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_secure_storage: 
+  flutter_secure_storage:
+  movie_app_api:
+    path: ../../data/movie_app_api
 
 dev_dependencies:
   flutter_test:

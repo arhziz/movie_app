@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movie_app_api/movie_app_api.dart' show AppSettings, User;
 import 'package:movie_app_repository/movie_app_repository.dart'
-    show AppSettings, AuthenticationRepository, AuthenticationStatus, User;
+    show AuthenticationRepository, AuthenticationStatus;
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -18,6 +21,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       : _authenticationRepository = authenticationRepository,
         super(const AppState.unknown(AppSettings.empty)) {
     on<AppUserSubscriptionRequested>(_onUserSubscriptionRequested);
+    on<AppLoginSubscriptionRequested>(_onAppLoginSubscriptionRequested);
     on<AppLogoutPressed>(_onLogoutPressed);
   }
 
@@ -35,6 +39,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           case AuthenticationStatus.unauthenticated:
             return emit(AppState.unauthenticated(appSettings));
           case AuthenticationStatus.authenticated:
+          
             final user = await _authenticationRepository.currentUser;
             return emit(
               user != User.empty
@@ -56,5 +61,23 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) {
     _authenticationRepository.logOut();
+  }
+
+  FutureOr<void> _onAppLoginSubscriptionRequested(
+    AppLoginSubscriptionRequested event,
+    Emitter<AppState> emit,
+  ) {
+    return emit.onEach(
+      _authenticationRepository.user,
+      onData: (user) async {
+        final appSettings = await _authenticationRepository.currentAppSettings;
+        return emit(
+          user != User.empty
+              ? AppState.authenticated(appSettings, user)
+              : AppState.unauthenticated(appSettings),
+        );
+      },
+      onError: addError,
+    );
   }
 }

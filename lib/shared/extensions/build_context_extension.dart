@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-/// Extension on [BuildContext] to provide easy access to theme and media query properties.
+/// Extension on [BuildContext] to provide easy access to theme and media query
+/// properties.
 /// This extension allows you to access the current theme, text theme,
 extension BuildContextExtension on BuildContext {
   /// Returns the current theme data.
-  /// This provides access to the theme properties such as colors, font styles, etc.
+  /// This provides access to the theme properties such as colors, font styles,
+  /// etc.
   ThemeData get theme => Theme.of(this);
 
+  ///
   NavigatorState get navigator => Navigator.of(this);
 
   /// Returns the current text theme.

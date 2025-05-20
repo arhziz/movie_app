@@ -31,14 +31,10 @@ class AppTextTheme {
           AppTextStyles.titleLarge.copyWith(color: AppColors.primaryDark),
       titleMedium:
           AppTextStyles.titleMedium.copyWith(color: AppColors.primaryDark),
-      titleSmall:
-          AppTextStyles.titleSmall.copyWith(color: AppColors.primaryDark),
-      bodyLarge:
-          AppTextStyles.bodyLarge.copyWith(color: AppColors.secondaryDark),
-      bodyMedium:
-          AppTextStyles.bodyMedium.copyWith(color: AppColors.primaryDark),
-      bodySmall:
-          AppTextStyles.bodySmall.copyWith(color: AppColors.secondaryDark),
+      titleSmall: AppTextStyles.titleSmall.copyWith(color: AppColors.white),
+      bodyLarge: AppTextStyles.bodyLarge.copyWith(color: AppColors.white),
+      bodyMedium: AppTextStyles.bodyMedium.copyWith(color: AppColors.white),
+      bodySmall: AppTextStyles.bodySmall.copyWith(color: AppColors.white),
     );
   }
 }

@@ -16,9 +16,11 @@ class Password extends FormzInput<String, PasswordValidationError> {
   /// {@macro password}
   const Password.dirty([super.value = '']) : super.dirty();
 
-  static final _passwordRegExp =
-      RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+  static final _passwordRegExp = RegExp(
+    r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]).{8,}$',
+  );
 
+  /// A password must contain at least 8 characters, one uppercase letter,
   @override
   PasswordValidationError? validator(String? value) {
     return _passwordRegExp.hasMatch(value ?? '')

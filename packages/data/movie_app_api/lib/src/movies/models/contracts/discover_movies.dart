@@ -15,7 +15,7 @@ class DiscoverMoviesRequest {
     this.includeAdult = false,
     this.includeVideo = false,
     this.language = 'en-US',
-    this.page = 1,
+    this.page = 2,
     this.ascending = false,
     this.sortBy = SortBy.popularity,
   });

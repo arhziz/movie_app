@@ -1,4 +1,2 @@
-export 'movies_empty.dart';
-export 'movies_error.dart';
-export 'movies_loading.dart';
-export 'movies_success.dart';
+export 'movie_loading_widget.dart';
+export 'movie_success_widget.dart';

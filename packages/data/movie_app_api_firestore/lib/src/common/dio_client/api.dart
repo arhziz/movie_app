@@ -23,9 +23,11 @@ class DioClient {
           onRequest: (options, handler) async {
             // Add authorization header
 
-            // final tokenModel = await httpClientLocator<ITokenStorage>().read();
+            // final tokenModel =
+            //await httpClientLocator<ITokenStorage>().read();
             // if (tokenModel != Token.empty) {
-            //   options.headers['Authorization'] = 'Bearer ${tokenModel.token}';
+            //   options.headers['Authorization']
+            //= 'Bearer ${tokenModel.token}';
             // }
             options.headers['Authorization'] = 'Bearer ${Values.tmdbToken}';
             return handler.next(options);

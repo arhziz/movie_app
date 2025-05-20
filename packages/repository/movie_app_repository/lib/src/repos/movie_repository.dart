@@ -15,6 +15,9 @@ class MovieRepository {
   Future<MovieResponse> discoverMovies(DiscoverMoviesRequest request) async =>
       _moviesApi.dicoverMovies(request);
 
+  ///
+  Future<MovieDetail> getMovieDetail(int id) async => _moviesApi.getMovie(id);
+
   ///calls the get genre method
   Future<List<Genre>> getGenres() async => _moviesApi.getGenres();
 

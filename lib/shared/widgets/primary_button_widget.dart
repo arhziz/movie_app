@@ -14,6 +14,7 @@ class PrimaryButtonWidget extends StatelessWidget {
     this.color = Colors.white,
     this.backgroundColor = AppColors.primaryDark,
     this.borderRadius = 15,
+    this.isDisabled = false,
   });
 
   /// The text to be displayed on the button.
@@ -32,6 +33,9 @@ class PrimaryButtonWidget extends StatelessWidget {
   /// Defaults to blue.
   final Color backgroundColor;
 
+  ///Checking if the button is disabled
+  final bool isDisabled;
+
   /// The border radius of the button.
   /// Defaults to 8.0.
   /// This value is used to create rounded corners for the button.
@@ -41,22 +45,25 @@ class PrimaryButtonWidget extends StatelessWidget {
     return Container(
       width: context.sizeWidth,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: !isDisabled ? backgroundColor : Colors.grey.withAlpha(100),
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),
         child: Text(
           text,
-          style: AppTextStyles.bodySmall
-              .copyWith(color: color, fontSize: AppDimens.p16),
+          style: AppTextStyles.bodySmall.copyWith(
+            color: !isDisabled ? color : Colors.grey,
+            fontSize: AppDimens.p16,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

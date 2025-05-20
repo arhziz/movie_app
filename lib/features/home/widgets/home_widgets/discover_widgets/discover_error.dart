@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 /// A widget that displays an error message when something goes wrong.
 /// This widget shows an emoji and a message indicating that something
 /// went wrong.
-class MoviesError extends StatelessWidget {
-  /// Creates a [MoviesError] widget.
+class DiscoverError extends StatelessWidget {
+  /// Creates a [DiscoverError] widget.
   /// This widget is used to display an error message when something goes wrong.
-  const MoviesError({required this.loadMovies, super.key});
+  const DiscoverError({required this.loadMovies, super.key});
 
   ///The function to load movies
   ///@param loadMovies the function to load movies
-  final ValueGetter<Future<void>> loadMovies;
+  final VoidCallback loadMovies;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

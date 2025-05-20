@@ -6,6 +6,7 @@ class AppDimens {
   static double selectGenreHeight = 200.sp;
   static double nowShowingPosterWidth = 143.sp;
   static double nowShowingPosterHeight = 212.sp;
+  static double discoverPosterBigHeight = 240.sp;
   static double nowShowingCardHeight = 310.sp;
   static double nowShowingCardWidth = 143.sp;
   static double popularPosterWidth = 85.sp;
