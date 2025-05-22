@@ -18,7 +18,7 @@ abstract class MoviesApi {
 
   ///Searchs movie by name only
   ///returns list of movie object
-  Future<List<Movie>> searchMovie(String name);
+  Future<MovieResponse> searchMovie(String name);
 
   ///get the list of the genres
   ///returns collection of Genre objects

@@ -199,3 +199,31 @@ class Videos {
 
   JsonMap toJson() => _$VideosToJson(this);
 }
+
+@JsonSerializable()
+class ExternalIds {
+  const ExternalIds({
+    this.imdbId = '',
+    this.facebookId = '',
+    this.instagramId = '',
+    this.wikiDataId = '',
+    this.twitterId = '',
+  });
+
+  @JsonKey(name: 'imdb_id')
+  final String imdbId;
+  @JsonKey(name: 'facebook_id')
+  final String facebookId;
+  @JsonKey(name: 'instagram_id')
+  final String instagramId;
+  @JsonKey(name: 'wikidata_id')
+  final String wikiDataId;
+  @JsonKey(name: 'twitter_id')
+  final String twitterId;
+
+  static const empty = ExternalIds();
+
+  static ExternalIds fromJson(JsonMap map) => _$ExternalIdsFromJson(map);
+
+  JsonMap toJson() => _$ExternalIdsToJson(this);
+}

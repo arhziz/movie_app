@@ -17,80 +17,97 @@ MovieDetail _$MovieDetailFromJson(Map<String, dynamic> json) => $checkedCreate(
           backdropPath:
               $checkedConvert('backdrop_path', (v) => v as String? ?? ''),
           belongsToCollection: $checkedConvert(
-              'belongs_to_collection',
-              (v) => v == null
-                  ? BelongsToCollection.empty
-                  : BelongsToCollection.fromJson(v as Map<String, dynamic>)),
+            'belongs_to_collection',
+            (v) => v == null
+                ? BelongsToCollection.empty
+                : BelongsToCollection.fromJson(v as Map<String, dynamic>),
+          ),
           budget: $checkedConvert('budget', (v) => (v as num?)?.toInt() ?? 0),
           genres: $checkedConvert(
-              'genres',
-              (v) =>
-                  (v as List<dynamic>?)
-                      ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
-                      .toList() ??
-                  const []),
+            'genres',
+            (v) =>
+                (v as List<dynamic>?)
+                    ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
+                    .toList() ??
+                const [],
+          ),
           homepage: $checkedConvert('homepage', (v) => v as String? ?? ''),
           id: $checkedConvert('id', (v) => (v as num?)?.toInt() ?? 0),
           imdbId: $checkedConvert('imdb_id', (v) => v as String? ?? ''),
           originCountry: $checkedConvert(
-              'origin_country',
-              (v) =>
-                  (v as List<dynamic>?)?.map((e) => e as String).toList() ??
-                  const []),
+            'origin_country',
+            (v) =>
+                (v as List<dynamic>?)?.map((e) => e as String).toList() ??
+                const [],
+          ),
           originalLanguage:
               $checkedConvert('original_language', (v) => v as String? ?? ''),
           originalTitle:
               $checkedConvert('original_title', (v) => v as String? ?? ''),
           overview: $checkedConvert('overview', (v) => v as String? ?? ''),
           popularity: $checkedConvert(
-              'popularity', (v) => (v as num?)?.toDouble() ?? 0),
+            'popularity',
+            (v) => (v as num?)?.toDouble() ?? 0,
+          ),
           posterPath: $checkedConvert('poster_path', (v) => v as String? ?? ''),
           productionCompanies: $checkedConvert(
-              'production_companies',
-              (v) =>
-                  (v as List<dynamic>?)
-                      ?.map((e) =>
-                          ProductionCompany.fromJson(e as Map<String, dynamic>))
-                      .toList() ??
-                  const []),
+            'production_companies',
+            (v) =>
+                (v as List<dynamic>?)
+                    ?.map(
+                      (e) =>
+                          ProductionCompany.fromJson(e as Map<String, dynamic>),
+                    )
+                    .toList() ??
+                const [],
+          ),
           productionCountries: $checkedConvert(
-              'production_countries',
-              (v) =>
-                  (v as List<dynamic>?)
-                      ?.map((e) =>
-                          ProductionCountry.fromJson(e as Map<String, dynamic>))
-                      .toList() ??
-                  const []),
+            'production_countries',
+            (v) =>
+                (v as List<dynamic>?)
+                    ?.map(
+                      (e) =>
+                          ProductionCountry.fromJson(e as Map<String, dynamic>),
+                    )
+                    .toList() ??
+                const [],
+          ),
           releaseDate:
               $checkedConvert('release_date', (v) => v as String? ?? ''),
           revenue: $checkedConvert('revenue', (v) => (v as num?)?.toInt() ?? 0),
           runtime: $checkedConvert('runtime', (v) => (v as num?)?.toInt() ?? 0),
           spokenLanguages: $checkedConvert(
-              'spoken_languages',
-              (v) =>
-                  (v as List<dynamic>?)
-                      ?.map((e) =>
-                          SpokenLanguage.fromJson(e as Map<String, dynamic>))
-                      .toList() ??
-                  const []),
+            'spoken_languages',
+            (v) =>
+                (v as List<dynamic>?)
+                    ?.map(
+                      (e) => SpokenLanguage.fromJson(e as Map<String, dynamic>),
+                    )
+                    .toList() ??
+                const [],
+          ),
           status: $checkedConvert('status', (v) => v as String? ?? ''),
           tagline: $checkedConvert('tagline', (v) => v as String? ?? ''),
           title: $checkedConvert('title', (v) => v as String? ?? ''),
           video: $checkedConvert('video', (v) => v as bool? ?? false),
           voteAverage: $checkedConvert(
-              'vote_average', (v) => (v as num?)?.toDouble() ?? 0),
+            'vote_average',
+            (v) => (v as num?)?.toDouble() ?? 0,
+          ),
           voteCount:
               $checkedConvert('vote_count', (v) => (v as num?)?.toInt() ?? 0),
           credits: $checkedConvert(
-              'credits',
-              (v) => v == null
-                  ? Credits.empty
-                  : Credits.fromJson(v as Map<String, dynamic>)),
+            'credits',
+            (v) => v == null
+                ? Credits.empty
+                : Credits.fromJson(v as Map<String, dynamic>),
+          ),
           videos: $checkedConvert(
-              'videos',
-              (v) => v == null
-                  ? Videos.empty
-                  : Videos.fromJson(v as Map<String, dynamic>)),
+            'videos',
+            (v) => v == null
+                ? Videos.empty
+                : Videos.fromJson(v as Map<String, dynamic>),
+          ),
         );
         return val;
       },
@@ -107,7 +124,7 @@ MovieDetail _$MovieDetailFromJson(Map<String, dynamic> json) => $checkedCreate(
         'releaseDate': 'release_date',
         'spokenLanguages': 'spoken_languages',
         'voteAverage': 'vote_average',
-        'voteCount': 'vote_count'
+        'voteCount': 'vote_count',
       },
     );
 
@@ -162,12 +179,13 @@ BelongsToCollection _$BelongsToCollectionFromJson(Map<String, dynamic> json) =>
       },
       fieldKeyMap: const {
         'posterPath': 'poster_path',
-        'backdropPath': 'backdrop_path'
+        'backdropPath': 'backdrop_path',
       },
     );
 
 Map<String, dynamic> _$BelongsToCollectionToJson(
-        BelongsToCollection instance) =>
+  BelongsToCollection instance,
+) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -191,7 +209,7 @@ ProductionCompany _$ProductionCompanyFromJson(Map<String, dynamic> json) =>
       },
       fieldKeyMap: const {
         'logoPath': 'logo_path',
-        'originCountry': 'origin_country'
+        'originCountry': 'origin_country',
       },
     );
 
@@ -238,7 +256,7 @@ SpokenLanguage _$SpokenLanguageFromJson(Map<String, dynamic> json) =>
       },
       fieldKeyMap: const {
         'englishName': 'english_name',
-        'iso6391': 'iso_639_1'
+        'iso6391': 'iso_639_1',
       },
     );
 
@@ -255,19 +273,21 @@ Credits _$CreditsFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         final val = Credits(
           cast: $checkedConvert(
-              'cast',
-              (v) =>
-                  (v as List<dynamic>?)
-                      ?.map((e) => Cast.fromJson(e as Map<String, dynamic>))
-                      .toList() ??
-                  const []),
+            'cast',
+            (v) =>
+                (v as List<dynamic>?)
+                    ?.map((e) => Cast.fromJson(e as Map<String, dynamic>))
+                    .toList() ??
+                const [],
+          ),
           crew: $checkedConvert(
-              'crew',
-              (v) =>
-                  (v as List<dynamic>?)
-                      ?.map((e) => Crew.fromJson(e as Map<String, dynamic>))
-                      .toList() ??
-                  const []),
+            'crew',
+            (v) =>
+                (v as List<dynamic>?)
+                    ?.map((e) => Crew.fromJson(e as Map<String, dynamic>))
+                    .toList() ??
+                const [],
+          ),
         );
         return val;
       },
@@ -284,12 +304,13 @@ Videos _$VideosFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         final val = Videos(
           results: $checkedConvert(
-              'results',
-              (v) =>
-                  (v as List<dynamic>?)
-                      ?.map((e) => Video.fromJson(e as Map<String, dynamic>))
-                      .toList() ??
-                  const []),
+            'results',
+            (v) =>
+                (v as List<dynamic>?)
+                    ?.map((e) => Video.fromJson(e as Map<String, dynamic>))
+                    .toList() ??
+                const [],
+          ),
         );
         return val;
       },
@@ -297,4 +318,36 @@ Videos _$VideosFromJson(Map<String, dynamic> json) => $checkedCreate(
 
 Map<String, dynamic> _$VideosToJson(Videos instance) => <String, dynamic>{
       'results': instance.results,
+    };
+
+ExternalIds _$ExternalIdsFromJson(Map<String, dynamic> json) => $checkedCreate(
+      'ExternalIds',
+      json,
+      ($checkedConvert) {
+        final val = ExternalIds(
+          imdbId: $checkedConvert('imdb_id', (v) => v as String? ?? ''),
+          facebookId: $checkedConvert('facebook_id', (v) => v as String? ?? ''),
+          instagramId:
+              $checkedConvert('instagram_id', (v) => v as String? ?? ''),
+          wikiDataId: $checkedConvert('wikidata_id', (v) => v as String? ?? ''),
+          twitterId: $checkedConvert('twitter_id', (v) => v as String? ?? ''),
+        );
+        return val;
+      },
+      fieldKeyMap: const {
+        'imdbId': 'imdb_id',
+        'facebookId': 'facebook_id',
+        'instagramId': 'instagram_id',
+        'wikiDataId': 'wikidata_id',
+        'twitterId': 'twitter_id',
+      },
+    );
+
+Map<String, dynamic> _$ExternalIdsToJson(ExternalIds instance) =>
+    <String, dynamic>{
+      'imdb_id': instance.imdbId,
+      'facebook_id': instance.facebookId,
+      'instagram_id': instance.instagramId,
+      'wikidata_id': instance.wikiDataId,
+      'twitter_id': instance.twitterId,
     };
