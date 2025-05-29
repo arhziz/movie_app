@@ -1,1 +1,2 @@
-export 'home_bloc.dart';
+export 'home/home.dart';
+export 'search/search.dart';

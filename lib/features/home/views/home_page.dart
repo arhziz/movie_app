@@ -72,18 +72,7 @@ class _HomePageState extends State<HomePage> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          // appBar: AppBar(
-          //   title: const Text('Home'),
-          //   actions: <Widget>[
-          //     IconButton(
-          //       key: const Key('homePage_logout_iconButton'),
-          //       icon: const Icon(Icons.exit_to_app),
-          //       onPressed: () {
-          //         context.read<AppBloc>().add(const AppLogoutPressed());
-          //       },
-          //     ),
-          //   ],
-          // ),
+          
           bottomNavigationBar: NavBar(
             pageIndex: currentPage,
             onTap: (index) {

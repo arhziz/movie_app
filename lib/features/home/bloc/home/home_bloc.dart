@@ -43,7 +43,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           totalPages: result.totalPages,
         ),
       );
-    } on Exception {
+    } on Exception catch (e) {
+      
       emit(state.copyWith(status: DiscoverStatus.failure));
     }
   }

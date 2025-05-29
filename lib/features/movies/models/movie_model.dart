@@ -33,6 +33,7 @@ class MovieModel extends Equatable {
     this.posterPath = '',
     this.releaseDate = '',
     this.title = '',
+    this.imdbId = '',
     this.originalTitle = '',
     this.video = false,
     this.voteAverage = 0,
@@ -60,6 +61,9 @@ class MovieModel extends Equatable {
 
   ///
   final String title;
+
+  ///
+  final String imdbId;
 
   ///
   final String originalTitle;
@@ -127,6 +131,7 @@ class MovieModel extends Equatable {
         defaultLanguage: movieDetail.originalLanguage,
         originalTitle: movieDetail.originalTitle,
         title: movieDetail.title,
+        imdbId: movieDetail.imdbId,
         originCountry: movieDetail.originCountry,
         overview: movieDetail.overview,
         voteAverage: movieDetail.voteAverage,

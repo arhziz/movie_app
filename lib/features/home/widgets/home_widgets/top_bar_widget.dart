@@ -89,10 +89,15 @@ class _UserWidget extends StatelessWidget {
             ),
           ),
           //if (user.photo.isNotEmpty)
-          const CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
-            backgroundColor: Colors.transparent,
+          InkWell(
+            onTap: () {
+              context.read<AppBloc>().add(const AppLogoutPressed());
+            },
+            child: const CircleAvatar(
+              radius: 25,
+              backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
+              backgroundColor: Colors.transparent,
+            ),
           ),
         ],
       ),

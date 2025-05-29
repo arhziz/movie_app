@@ -1,52 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/app_core/app_core.dart';
-import 'package:movie_app/features/home/bloc/bloc.dart';
-import 'package:movie_app/features/home/widgets/home_widgets/search_panel_widget.dart';
+import 'package:movie_app/features/home/bloc/search/search_bloc.dart';
 import 'package:movie_app/shared/shared.dart';
 
-///
-class SearchSectionWidget extends StatelessWidget {
-  ///
-  const SearchSectionWidget({super.key});
+/// A widget that represents a search panel in the home view.
+/// It is a stateless widget that displays a centered container with a text label.
+class SearchPanelWidget extends StatelessWidget {
+  /// Creates a [SearchPanelWidget].
+  /// This widget does not take any parameters.
+  const SearchPanelWidget({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<SearchBloc, SearchState>(
-      listenWhen: (previous, current) =>
-          previous.isFocused != current.isFocused,
-      listener: (context, state) {
-        if (state.isFocused) {
-          context.read<SearchBloc>().add(
-                const SearchFocusChanged(isFocused: false),
-              );
-          context.navigator.push(
-            SearchPanelWidget.route(),
-          );
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          children: [
-            const _HamburgerMenuWidget(),
-            SizedBox(width: AppDimens.p10),
-            const _SearchWidget(),
-          ],
-        ),
-      ),
+  /// Creates a page for the [SearchPanelWidget].
+  static Route<void> route() {
+    return MaterialPageRoute<void>(
+      builder: (_) => const SearchPanelWidget(),
     );
   }
-}
-
-class _HamburgerMenuWidget extends StatelessWidget {
-  const _HamburgerMenuWidget();
 
   @override
   Widget build(BuildContext context) {
-    return ClickableContainerWidget(
-      child: SvgPicture.asset(AppAssets.iconMoreVert),
+    return Scaffold(
+      body: Container(
+        decoration: AppTheme.containerGradientBg(),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Row(
+                  children: [
+                    ClickableContainerWidget(
+                      onTap: () {
+                        context.navigator.pop();
+                      },
+                      child: SvgPicture.asset(AppAssets.iconAngleLeft),
+                    ),
+                    SizedBox(width: AppDimens.p10),
+                    const _SearchWidget(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Expanded(
+                child: Center(
+                  child: Text(
+                    'Search Panel',
+                    style: AppTextStyles.bodyLarge,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -58,7 +67,6 @@ class _SearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: TextField(
-        focusNode: context.read<SearchBloc>().focusNode,
         onChanged: (value) {
           context.read<SearchBloc>().add(SearchQueryChanged(value));
         },

@@ -6,6 +6,7 @@ import 'package:movie_app/app_core/app_core.dart';
 import 'package:movie_app/features/movies/bloc/movie_bloc.dart';
 import 'package:movie_app/features/movies/models/movie_model.dart';
 import 'package:movie_app/shared/shared.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 ///
 class MovieSuccessWidget extends StatelessWidget {
@@ -27,10 +28,41 @@ class MovieSuccessWidget extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         slivers: [
           _AppBar(movie: movie),
+          // This header gets pinned after scroll
+
           _BodyListWidget(movie: movie),
         ],
       ),
     );
+  }
+}
+
+/// Custom delegate for the pinned header
+class _PinnedHeaderDelegate extends SliverPersistentHeaderDelegate {
+  _PinnedHeaderDelegate({
+    required this.minExtent,
+    required this.maxExtent,
+    required this.child,
+  });
+
+  @override
+  final double minExtent;
+  @override
+  final double maxExtent;
+  final Widget child;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Material(elevation: 4, child: child);
+  }
+
+  @override
+  bool shouldRebuild(_PinnedHeaderDelegate oldDelegate) {
+    return oldDelegate.child != child;
   }
 }
 
@@ -59,8 +91,9 @@ class _AppBar extends StatelessWidget {
           bottomRight: Radius.circular(50.sp),
         ),
       ),
-      stretchTriggerOffset: 300,
+      stretchTriggerOffset: context.sizeHeight * 0.50,
       expandedHeight: context.sizeHeight * 0.60,
+      pinned: true,
       flexibleSpace: const _JumbotronBodyWidget(),
     );
   }
@@ -115,72 +148,101 @@ class _JumbotronBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final movie = context.read<MovieBloc>().state.movie;
 
-    return Container(
-      padding: EdgeInsets.all(0.sp),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50.sp),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(
-            AppConfigs.preMovieBackdrop(
-              movie.posterPath,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Calculate shrink percentage
+        final top = constraints.biggest.height;
+        final shrinkOffset = top - kToolbarHeight;
+        final scale = (shrinkOffset / (250 - kToolbarHeight)).clamp(0.5, 1.0);
+
+        return Container(
+          padding: EdgeInsets.all(0.sp),
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.sp),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage(
+                AppConfigs.preMovieBackdrop(
+                  movie.posterPath,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.black.withOpacity(0.4),
-              Colors.black.withOpacity(0.2),
-              Colors.black.withOpacity(0.1),
-              Colors.transparent,
-              Colors.transparent,
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(15.sp),
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Container(
-                    padding: EdgeInsets.all(25.sp),
-                    height: 100.sp,
-                    width: 100.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.sp),
-                      color: AppColors.primaryDark.withOpacity(0.5),
-                    ),
-                    child: SvgPicture.asset(
-                      AppAssets.iconPlayFilled,
-                      colorFilter: const ColorFilter.mode(
-                        AppColors.white,
-                        BlendMode.srcIn,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(0.4),
+                  Colors.black.withOpacity(0.2),
+                  Colors.black.withOpacity(0.1),
+                  Colors.transparent,
+                  Colors.transparent,
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(15.sp),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Transform.scale(
+                        scale: scale,
+                        child: InkWell(
+                          onTap: () {
+                            final url = AppConfigs.youtubeVideo(
+                              movie.videos.results.last.key,
+                            );
+                            launchUrl(
+                              Uri.parse(url),
+                              mode: LaunchMode.externalApplication,
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(25.sp),
+                            height: 100.sp,
+                            width: 100.sp,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.sp),
+                              color: AppColors.primaryDark.withOpacity(0.5),
+                            ),
+                            child: SvgPicture.asset(
+                              AppAssets.iconPlayFilled,
+                              colorFilter: const ColorFilter.mode(
+                                AppColors.white,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Transform.scale(
+                    scale: scale,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.sp,
+                        vertical: 5.sp,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _MovieTitleWidget(movie: movie),
+                          _MovieRatingsWidget(movie: movie),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 15.sp),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _MovieTitleWidget(movie: movie),
-                    _MovieRatingsWidget(movie: movie),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -233,6 +295,44 @@ class _MovieRatingsWidget extends StatelessWidget {
               style: context.textTheme.bodyLarge!.copyWith(
                 fontWeight: FontWeight.w500,
                 fontSize: 8.sp,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            InkWell(
+              onTap: () {
+                final url = AppConfigs.imdbMovie(movie.imdbId);
+                launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+              },
+              child: SvgPicture.asset(
+                AppAssets.iconImdb,
+                width: 30.sp,
+                fit: BoxFit.scaleDown,
+                colorFilter: const ColorFilter.mode(
+                  Colors.yellow,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 5.sp,
+            ),
+            InkWell(
+              onTap: () {
+                final url = AppConfigs.wikipediaMovie(movie.title);
+                launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+              },
+              child: SvgPicture.asset(
+                AppAssets.iconWikipedia,
+                width: 30.sp,
+                fit: BoxFit.scaleDown,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ],
@@ -410,40 +510,72 @@ class _VideoItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: 10.sp,
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: 10.sp,
-        vertical: 5.sp,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  video.name,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12.sp,
+    return InkWell(
+      onTap: () {
+        final url = AppConfigs.youtubeVideo(video.key);
+        launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+          bottom: 10.sp,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 10.sp,
+          vertical: 5.sp,
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 60.sp,
+              width: 120.sp,
+              margin: EdgeInsets.only(
+                right: 10.sp,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: AppColors.primaryDark.withOpacity(0.5),
+                image: DecorationImage(
+                  image: NetworkImage(
+                    AppConfigs.youtubeThumbnail(video.key),
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  AppAssets.iconPlayFilled,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.white.withOpacity(0.7),
+                    BlendMode.srcIn,
                   ),
                 ),
-                Text(
-                  video.site,
-                  style: context.textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 10.sp,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    video.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  Text(
+                    video.site,
+                    style: context.textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

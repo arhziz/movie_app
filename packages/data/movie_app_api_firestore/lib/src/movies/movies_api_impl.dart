@@ -62,7 +62,7 @@ class MoviesApiImpl extends MoviesApi {
         // ignore: lines_longer_than_80_chars
         '${Urls.discoverMovies}?include_adult=false&include_video=${request.includeVideo}&language=${request.language}&page=${request.page}&sort_by=$sortBy';
     final response = await _client.getHttp(uri, authenticate: true);
-    if (response.statusCode != 200) {
+    if (response.statusCode != 200 && response.statusCode != 304) {
       throw ApiRequestFailure();
     }
     final jsonMap = response.data as JsonMap;
@@ -76,7 +76,7 @@ class MoviesApiImpl extends MoviesApi {
   Future<MovieDetail> getMovie(int id) async {
     final uri =
         // ignore: lines_longer_than_80_chars
-        '${Urls.getMovieDetails}$id?append_to_response=credits%2Cvideos&language=en-US';
+        '${Urls.getMovieDetails}$id?append_to_response=credits%2Cvideos%2Cexternal_ids&language=en-US';
     final response = await _client.getHttp(uri, authenticate: true);
     if (response.statusCode != 200 && response.statusCode != 304) {
       throw ApiRequestFailure();
@@ -89,8 +89,18 @@ class MoviesApiImpl extends MoviesApi {
   }
 
   @override
-  Future<List<Movie>> searchMovie(String name) {
-    throw UnimplementedError();
+  Future<MovieResponse> searchMovie(String name) async {
+    final uri = Urls.searchMovies(name);
+
+    final response = await _client.getHttp(uri, authenticate: true);
+    if (response.statusCode != 200 && response.statusCode != 304) {
+      throw ApiRequestFailure();
+    }
+    final jsonMap = response.data as JsonMap;
+    if (!jsonMap.containsKey('results')) throw ApiResponseNotFound();
+
+    final result = MovieResponse.fromJson(jsonMap);
+    return result;
   }
 
   @override
@@ -102,7 +112,7 @@ class MoviesApiImpl extends MoviesApi {
       Urls.getMovieGenres,
       authenticate: true,
     );
-    if (response.statusCode != 200) {
+    if (response.statusCode != 200 && response.statusCode != 304) {
       throw ApiRequestFailure();
     }
     final jsonMap = response.data as JsonMap;

@@ -12,6 +12,28 @@ class AppConfigs {
   static String preCastProfilePath(String path) =>
       'https://image.tmdb.org/t/p/w185$path';
 
+  static String youtubeThumbnail(String key) =>
+      'https://img.youtube.com/vi/$key/0.jpg';
+
+  static String youtubeVideo(String key) =>
+      'https://www.youtube.com/watch?v=$key';
+
+  static String imdbMovie(String id) => 'https://www.imdb.com/title/$id';
+
+  static String wikipediaMovie(String title) {
+    // Replace spaces with underscores for the URL
+    final formattedTitle = title.replaceAll(' ', '_');
+    // Return the Wikipedia URL for the movie
+    return 'https://en.wikipedia.org/wiki/$formattedTitle';
+  }
+
+  static String wikipediaPerson(String name) {
+    // Replace spaces with underscores for the URL
+    final formattedName = name.replaceAll(' ', '_');
+    // Return the Wikipedia URL for the person
+    return 'https://en.wikipedia.org/wiki/$formattedName';
+  }
+
   static const int shouldCachePages = 1;
 
   static String getMovieGenresString({

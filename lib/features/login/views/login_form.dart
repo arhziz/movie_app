@@ -256,26 +256,7 @@ class _OtherLoginOptions extends StatelessWidget {
   }
 }
 
-// class _GoogleLoginButton extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-//     return ElevatedButton.icon(
-//       key: const Key('loginForm_googleLogin_raisedButton'),
-//       label: const Text(
-//         'SIGN IN WITH GOOGLE',
-//         style: TextStyle(color: Colors.white),
-//       ),
-//       style: ElevatedButton.styleFrom(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(30),
-//         ),
-//         backgroundColor: theme.colorScheme.secondary,
-//       ),
-//       onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
-//     );
-//   }
-// }
+
 
 class _SignUpTextAndButton extends StatelessWidget {
   @override

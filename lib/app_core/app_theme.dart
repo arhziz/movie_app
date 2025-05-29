@@ -7,6 +7,19 @@ import 'package:movie_app/app_core/app_text_theme.dart';
 /// It is used to manage the themes in a single place
 /// and to avoid hardcoding the themes in multiple places
 class AppTheme {
+  ///
+  static BoxDecoration containerGradientBg() => const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.homeBackgroundColor,
+            AppColors.homeBgColor,
+            AppColors.homeBgThreeColor,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      );
+
   ///Light theme
   static ThemeData get lightTheme {
     return ThemeData(

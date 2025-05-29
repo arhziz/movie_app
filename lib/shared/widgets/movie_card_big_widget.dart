@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/app_core/app_core.dart';
-import 'package:movie_app/features/home/bloc/home_bloc.dart';
+import 'package:movie_app/features/home/bloc/home/home_bloc.dart';
 import 'package:movie_app/features/movies/models/movie_model.dart';
 import 'package:movie_app/features/movies/view/movie_page.dart';
 import 'package:movie_app/shared/extensions/extensions.dart';

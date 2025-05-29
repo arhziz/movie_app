@@ -23,6 +23,7 @@ class AppAssets {
   static const String iconHeartBroken =
       'assets/svgs/icons/heart_broken_icon.svg';
   static const String iconHome = 'assets/svgs/icons/home_icon.svg';
+  static const String iconImdb = 'assets/svgs/icons/imdb_icon.svg';
   static const String iconMore = 'assets/svgs/icons/more_icon.svg';
   static const String iconMoreVert = 'assets/svgs/icons/more_vert_icon.svg';
   static const String iconPlay = 'assets/svgs/icons/play_icon.svg';
@@ -35,4 +36,5 @@ class AppAssets {
   static const String iconUser = 'assets/svgs/icons/user_icon.svg';
   static const String iconUserBroken = 'assets/svgs/icons/user_broken_icon.svg';
   static const String iconWatch = 'assets/svgs/icons/watch_icon.svg';
+  static const String iconWikipedia = 'assets/svgs/icons/wikipedia_icon.svg';
 }
