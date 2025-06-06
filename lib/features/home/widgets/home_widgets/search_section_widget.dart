@@ -13,29 +13,20 @@ class SearchSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SearchBloc, SearchState>(
-      listenWhen: (previous, current) =>
-          previous.isFocused != current.isFocused,
-      listener: (context, state) {
-        if (state.isFocused) {
-          context.read<SearchBloc>().add(
-                const SearchFocusChanged(isFocused: false),
-              );
-          context.navigator.push(
-            SearchPanelWidget.route(),
-          );
-        }
+    return BlocConsumer<SearchBloc, SearchState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            children: [
+              const _HamburgerMenuWidget(),
+              SizedBox(width: AppDimens.p10),
+              const _SearchWidget(),
+            ],
+          ),
+        );
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          children: [
-            const _HamburgerMenuWidget(),
-            SizedBox(width: AppDimens.p10),
-            const _SearchWidget(),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -57,45 +48,56 @@ class _SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: TextField(
-        focusNode: context.read<SearchBloc>().focusNode,
-        onChanged: (value) {
-          context.read<SearchBloc>().add(SearchQueryChanged(value));
+      child: InkWell(
+        onTap: () {
+          context.navigator.push(
+            SlideFromBottomRoute<void>(
+              page: const SearchPanelWidget(),
+            ),
+          );
         },
-        decoration: InputDecoration(
-          fillColor: AppColors.white.withOpacity(0.1),
-          filled: true,
-          hintText: 'Search recent movies...',
-          hintStyle: AppTextStyles.bodySmall.copyWith(fontSize: AppDimens.p10),
-          prefixIcon: SvgPicture.asset(
-            AppAssets.iconSearch,
-            fit: BoxFit.scaleDown,
-          ), // Leading icon
+        child: TextField(
+          readOnly: true,
+          enabled: false,
+          onChanged: (value) {
+            //context.read<SearchBloc>().add(SearchQueryChanged(value));
+          },
+          decoration: InputDecoration(
+            fillColor: AppColors.white.withOpacity(0.1),
+            filled: true,
+            hintText: 'Search recent movies...',
+            hintStyle:
+                AppTextStyles.bodySmall.copyWith(fontSize: AppDimens.p10),
+            prefixIcon: SvgPicture.asset(
+              AppAssets.iconSearch,
+              fit: BoxFit.scaleDown,
+            ), // Leading icon
 
-          suffixIcon: SvgPicture.asset(
-            AppAssets.iconSearchFilter,
-            fit: BoxFit.scaleDown,
-          ), // Trailing icon
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.white.withAlpha(100),
+            suffixIcon: SvgPicture.asset(
+              AppAssets.iconSearchFilter,
+              fit: BoxFit.scaleDown,
+            ), // Trailing icon
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 10,
             ),
-            borderRadius: BorderRadius.circular(AppDimens.p12),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.white.withAlpha(250),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.white.withAlpha(100),
+              ),
+              borderRadius: BorderRadius.circular(AppDimens.p12),
             ),
-            borderRadius: BorderRadius.circular(AppDimens.p12),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.white.withAlpha(100),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.white.withAlpha(250),
+              ),
+              borderRadius: BorderRadius.circular(AppDimens.p12),
             ),
-            borderRadius: BorderRadius.circular(AppDimens.p12),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.white.withAlpha(100),
+              ),
+              borderRadius: BorderRadius.circular(AppDimens.p12),
+            ),
           ),
         ),
       ),

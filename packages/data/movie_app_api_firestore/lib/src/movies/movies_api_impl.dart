@@ -89,8 +89,8 @@ class MoviesApiImpl extends MoviesApi {
   }
 
   @override
-  Future<MovieResponse> searchMovie(String name) async {
-    final uri = Urls.searchMovies(name);
+  Future<MovieResponse> searchMovie(String name, {int page = 1}) async {
+    final uri = Urls.searchMovies(name, page: page);
 
     final response = await _client.getHttp(uri, authenticate: true);
     if (response.statusCode != 200 && response.statusCode != 304) {

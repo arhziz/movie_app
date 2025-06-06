@@ -32,3 +32,12 @@ class SearchFocusChanged extends SearchEvent {
   @override
   List<Object> get props => [isFocused];
 }
+
+///
+class SearchLoadMoreEvent extends SearchEvent {
+  /// SearchLoadMoreEvent
+  const SearchLoadMoreEvent();
+
+  @override
+  List<Object> get props => [];
+}

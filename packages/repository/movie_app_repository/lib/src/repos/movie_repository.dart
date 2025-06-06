@@ -19,8 +19,8 @@ class MovieRepository {
   ///takes in the name of the movie
   ///returns the list of movie objects
   ///
-  Future<MovieResponse> searchMovie(String name) async =>
-      _moviesApi.searchMovie(name);
+  Future<MovieResponse> searchMovie(String name, {int page = 1}) async =>
+      _moviesApi.searchMovie(name, page: page);
 
   ///
   Future<MovieDetail> getMovieDetail(int id) async => _moviesApi.getMovie(id);
